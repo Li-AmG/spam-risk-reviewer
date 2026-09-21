@@ -6,3 +6,7 @@ coverage/
 .env
 .env.*
 *.log
+
+# Local promotion assets
+spam-risk-reviewer-logo.png
+spam-risk-reviewer-logo.svg

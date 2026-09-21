@@ -52,11 +52,13 @@ These examples are synthetic. They are meant to show behavior, not to represent 
 
 ## Project Materials
 
-- `LAUNCH.md`: GitHub/community description, short posts, feedback questions, and good first issues.\n- `PROMOTION.md`: overseas community posting plan, social copy, and reply templates.
+- `LAUNCH.md`: GitHub/community description, short posts, feedback questions, and good first issues.
+- `PROMOTION.md`: overseas community posting plan, social copy, and reply templates.
 - `ROADMAP.md`: practical next milestones for keeping the project free, private, and useful.
 - `CONTRIBUTING.md` and `PRIVACY.md`: contribution expectations and the browser-only data boundary.
 - `LICENSE-OPTIONS.md`: notes on why MIT was selected for this demo.
 - `REPOSITORY-CHECKLIST.md`: pre-publication checks for GitHub setup.
+- `CHANGELOG.md`: short release history and follow-up improvements.
 
 ## Roadmap Snapshot
 
