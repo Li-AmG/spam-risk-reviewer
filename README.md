@@ -62,10 +62,8 @@ These examples are synthetic. They are meant to show behavior, not to represent 
 
 Near-term work is intentionally small:
 
-- Add a `review` state between pass and hold.
-- Add a copyable review summary.
-- Add tests for all built-in web demo scenarios.
 - Add visible policy presets without sending data to a server.
+- Refine the how-it-works and rule explanation copy as feedback comes in.
 
 ## Privacy
 

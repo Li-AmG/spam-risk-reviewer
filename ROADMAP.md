@@ -36,7 +36,7 @@ This roadmap keeps the project useful while staying free to operate. It assumes 
 ### 4. Evidence And Trust
 
 - Add a privacy note linked from the header or footer.
-- Add a compact "how it works" section with the exact signals used.
+- Refine the compact "how it works" section with feedback from users.
 - Keep the "no DNS verification" limitation visible.
 - Add a changelog once public releases begin.
 
