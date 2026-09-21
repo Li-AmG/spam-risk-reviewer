@@ -8,6 +8,20 @@ Live demo: https://spam-risk-reviewer.wt820101.workers.dev
 
 Source: https://github.com/Li-AmG/spam-risk-reviewer
 
+## Quick Try
+
+Open the live demo and click one of the sample scenarios:
+
+- `Opt-in newsletter` and `Product launch` should pass with zero review items.
+- `Reactivation list` should hold with four review items.
+- `Imported promo blast` should hold with seven review items.
+
+No login is required. The page runs the review locally in the browser.
+
+## Current Status
+
+This is an early static demo deployed on Cloudflare Workers. It is useful for feedback, examples, and small workflow discussions. It is not a production deliverability platform, DNS verifier, consent system, or sending approval tool.
+
 ## What It Checks
 
 - Sender authentication: SPF, DKIM, and DMARC status as reported by the user.
@@ -41,6 +55,15 @@ These examples are synthetic. They are meant to show behavior, not to represent 
 - `CONTRIBUTING.md` and `PRIVACY.md`: contribution expectations and the browser-only data boundary.
 - `LICENSE-OPTIONS.md`: notes on why MIT was selected for this demo.
 - `REPOSITORY-CHECKLIST.md`: pre-publication checks for GitHub setup.
+
+## Roadmap Snapshot
+
+Near-term work is intentionally small:
+
+- Add a `review` state between pass and hold.
+- Add a copyable review summary.
+- Add tests for all built-in web demo scenarios.
+- Add visible policy presets without sending data to a server.
 
 ## Privacy
 
