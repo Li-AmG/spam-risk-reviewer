@@ -6,6 +6,8 @@ Spam Risk Reviewer turns basic sender and list-health signals into a plain-Engli
 
 Live demo: https://spam-risk-reviewer.wt820101.workers.dev
 
+Source: https://github.com/Li-AmG/spam-risk-reviewer
+
 ## What It Checks
 
 - Sender authentication: SPF, DKIM, and DMARC status as reported by the user.
