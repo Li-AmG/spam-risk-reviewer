@@ -16,7 +16,7 @@ This roadmap keeps the project useful while staying free to operate. It assumes 
 
 - Decide whether this demo belongs in the existing repository or a new public repository.
 - Choose a license only after confirming ownership and intended permissions.
-- Add `README.md`, `LAUNCH.md`, `ROADMAP.md`, and the seven public demo assets.
+- Add `README.md`, `LAUNCH.md`, `PROMOTION.md`, `ROADMAP.md`, and the public demo assets.
 - Add a short repository description and topics from `LAUNCH.md`.
 - Add issues from the "Good First Issues" section in `LAUNCH.md`.
 
@@ -27,7 +27,11 @@ This roadmap keeps the project useful while staying free to operate. It assumes 
 - Add a "copy summary" button for sharing the review internally.
 - Add tests for all five built-in demo scenarios.
 
-### 3. Policy Presets\n\n- Shipped visible threshold presets: conservative, standard, and lenient.\n- Keep defaults clear and explain that thresholds are not universal delivery rules.\n- Continue refining preset language and thresholds from user feedback.
+### 3. Policy Presets
+
+- Shipped visible threshold presets: conservative, standard, and lenient.
+- Keep defaults clear and explain that thresholds are not universal delivery rules.
+- Continue refining preset language and thresholds from user feedback.
 
 ### 4. Evidence And Trust
 
@@ -55,4 +59,5 @@ Before any AI integration:
 - Storing campaign data on a server.
 - Claiming inbox placement or deliverability guarantees.
 - Replacing ESP compliance review.
+
 

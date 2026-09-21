@@ -52,7 +52,7 @@ These examples are synthetic. They are meant to show behavior, not to represent 
 
 ## Project Materials
 
-- `LAUNCH.md`: GitHub/community description, short posts, feedback questions, and good first issues.
+- `LAUNCH.md`: GitHub/community description, short posts, feedback questions, and good first issues.\n- `PROMOTION.md`: overseas community posting plan, social copy, and reply templates.
 - `ROADMAP.md`: practical next milestones for keeping the project free, private, and useful.
 - `CONTRIBUTING.md` and `PRIVACY.md`: contribution expectations and the browser-only data boundary.
 - `LICENSE-OPTIONS.md`: notes on why MIT was selected for this demo.
@@ -62,7 +62,8 @@ These examples are synthetic. They are meant to show behavior, not to represent 
 
 Near-term work is intentionally small:
 
-- Refine the policy preset wording and thresholds as feedback comes in.\n- Add more realistic edge-case examples without sending data to a server.
+- Refine the policy preset wording and thresholds as feedback comes in.
+- Add more realistic edge-case examples without sending data to a server.
 
 ## Privacy
 
@@ -117,7 +118,7 @@ Only deploy these public assets:
 - `robots.txt`
 - `sitemap.xml`
 
-`wrangler.jsonc` targets the existing Worker. For a clean deployment, stage only the seven public files in a temporary directory, then deploy that directory with Wrangler.
+`wrangler.jsonc` targets the existing Worker. For a clean deployment, stage only the public files in a temporary directory, then deploy that directory with Wrangler.
 
 From inside `spam-risk-demo`, prepare a local staging directory with:
 
@@ -141,4 +142,5 @@ Validation currently covers the existing fixtures, missing signals, threshold bo
 ## License
 
 MIT. See `LICENSE`.
+
 
