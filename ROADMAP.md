@@ -27,11 +27,7 @@ This roadmap keeps the project useful while staying free to operate. It assumes 
 - Add a "copy summary" button for sharing the review internally.
 - Add tests for all five built-in demo scenarios.
 
-### 3. Policy Presets
-
-- Add visible threshold presets such as conservative, balanced, and lenient.
-- Keep defaults clear and explain that thresholds are not universal delivery rules.
-- Export the selected policy in JSON reports.
+### 3. Policy Presets\n\n- Shipped visible threshold presets: conservative, standard, and lenient.\n- Keep defaults clear and explain that thresholds are not universal delivery rules.\n- Continue refining preset language and thresholds from user feedback.
 
 ### 4. Evidence And Trust
 
@@ -59,3 +55,4 @@ Before any AI integration:
 - Storing campaign data on a server.
 - Claiming inbox placement or deliverability guarantees.
 - Replacing ESP compliance review.
+

@@ -1,10 +1,23 @@
-import { normalizePolicy, reviewSpamRisk } from './core.mjs';
+import { policyPreset, reviewSpamRisk } from './core.mjs';
 import { scenarios, scenarioInputs } from './scenarios.mjs';
 import { reviewSummary } from './summary.mjs';
 const $ = id => document.getElementById(id);
 const form = $('review-form');
 const card = document.querySelector('.result-card');
 let report = null;
+const pct = value => `${Number((value*100).toFixed(3))}%`;
+function selectedPreset(){return policyPreset($('policy-preset').value);}
+function renderPolicy(){
+  const preset=selectedPreset();
+  const p=preset.policy;
+  $('policy-summary').textContent=`${preset.label}: ${preset.description}`;
+  $('rule-bounce').textContent=`≤ ${pct(p.max_bounce_rate)}`;
+  $('rule-complaint').textContent=`≤ ${pct(p.max_complaint_rate)}`;
+  $('rule-freshness').textContent=`≤ ${p.max_freshness_days} days`;
+  $('rule-warmup').textContent=`≥ ${p.min_warm_up_days} days`;
+  $('policy-preview').innerHTML=`<strong>${preset.label}</strong><span>Bounce ≤ ${pct(p.max_bounce_rate)} · Complaint ≤ ${pct(p.max_complaint_rate)} · List age ≤ ${p.max_freshness_days} days · Warm-up ≥ ${p.min_warm_up_days} days</span>`;
+}
+renderPolicy();
 function resetResult(edited=false) {
   report=null;
   delete card.dataset.state;
@@ -23,8 +36,8 @@ for (const [key,id] of [['low','low-example'],['launch','launch-example'],['word
   $(id).addEventListener('click',()=>{ for(const [field,value] of Object.entries(scenarios[key].fields)) $(field).value=value; clearErrors(); resetResult(true); });
 }
 form.addEventListener('input',()=>{clearErrors();resetResult(true);});
-form.addEventListener('change',()=>{clearErrors();resetResult(true);});
-form.addEventListener('reset',()=>{clearErrors();resetResult();});
+form.addEventListener('change',()=>{clearErrors();renderPolicy();resetResult(true);});
+form.addEventListener('reset',()=>{clearErrors();setTimeout(renderPolicy);resetResult();});
 function validationMessage(el){
   const label=document.querySelector(`label[for="${el.id}"]`).textContent;
   if(!el.value.trim())return `${label}: Please enter a value.`;
@@ -47,10 +60,10 @@ function validate(){
 }
 function friendly(reason) {
   if(reason==='SPF did not pass'||reason==='DKIM did not pass'||reason==='DMARC did not pass')return `${reason.split(' ')[0]}: ${$(reason.split(' ')[0].toLowerCase()).value==='unknown'?'result is unknown':'reported as failed'}. Confirm a passing result with your email provider.`;
-  if(reason.startsWith('bounce_rate'))return `Bounce rate is ${$('bounce').value}%, above the 2% limit.`;
-  if(reason.startsWith('complaint_rate'))return `Complaint rate is ${$('complaint').value}%, above the 0.1% limit.`;
-  if(reason.startsWith('list freshness'))return `List age is ${$('freshness').value} days, above the 90-day limit.`;
-  if(reason.startsWith('warm_up_days'))return `Sender warm-up is ${$('warmup').value} days. The rule requires at least 14.`;
+  if(reason.startsWith('bounce_rate'))return `Bounce rate is ${$('bounce').value}%, above the selected ${pct(selectedPreset().policy.max_bounce_rate)} limit.`;
+  if(reason.startsWith('complaint_rate'))return `Complaint rate is ${$('complaint').value}%, above the selected ${pct(selectedPreset().policy.max_complaint_rate)} limit.`;
+  if(reason.startsWith('list freshness'))return `List age is ${$('freshness').value} days, above the selected ${selectedPreset().policy.max_freshness_days}-day limit.`;
+  if(reason.startsWith('warm_up_days'))return `Sender warm-up is ${$('warmup').value} days. The selected rule requires at least ${selectedPreset().policy.min_warm_up_days}.`;
   if(reason.startsWith('content risk flag:'))return `Wording to review: ${reason.slice('content risk flag: '.length)}.`;
   return reason;
 }
@@ -60,10 +73,11 @@ form.addEventListener('submit',event=>{
   if(errors.length){$('form-error').textContent=errors.join(' ');$('form-error').hidden=false;form.querySelector('[aria-invalid=true]').focus();return;}
   const fields={sender:$('sender').value.trim(),subject:$('subject').value.trim(),summary:$('summary').value.trim(),size:Number($('size').value),freshness:Number($('freshness').value),bounce:Number($('bounce').value),complaint:Number($('complaint').value),warmup:Number($('warmup').value),spf:$('spf').value,dkim:$('dkim').value,dmarc:$('dmarc').value};
   const inputs=scenarioInputs(fields);
-  const policy=normalizePolicy();
+  const preset=selectedPreset();
+  const policy=preset.policy;
   const verdict=reviewSpamRisk(inputs,policy);
   const messages=verdict.blockers.map(friendly);
-  report={schema:'spam-risk-reviewer.web-demo.v1',reviewed_at:new Date().toISOString(),mode:'local-rule-check',inputs,reported_auth_status:{spf:$('spf').value,dkim:$('dkim').value,dmarc:$('dmarc').value},policy,verdict,review_notes:messages,limitations:['Caller-provided signals; no independent authentication verification.','Simple keyword checks, not a complete spam or security assessment.','No sending authorization or inbox delivery guarantee.']};
+  report={schema:'spam-risk-reviewer.web-demo.v1',reviewed_at:new Date().toISOString(),mode:'local-rule-check',inputs,reported_auth_status:{spf:$('spf').value,dkim:$('dkim').value,dmarc:$('dmarc').value},policy_preset:{key:preset.key,label:preset.label,description:preset.description},policy,verdict,review_notes:messages,limitations:['Caller-provided signals; no independent authentication verification.','Simple keyword checks, not a complete spam or security assessment.','No sending authorization or inbox delivery guarantee.']};
   card.dataset.state=verdict.risk_level;
   const states={pass:['RULES PASSED','No blockers in these inputs.','The supplied signals meet these rules. Confirm consent, content, and your sending provider’s requirements before taking action.','✓'],hold:['HOLD FOR REVIEW','A few things need attention.','Review the items below before moving this campaign forward. These findings are based on the values you supplied.','!'],review:['REVIEW NEEDED','Take another look.','Some inputs need human review before moving this campaign forward.','!']};
   const [pill,title,description,icon]=states[verdict.risk_level];
@@ -89,3 +103,4 @@ $('copy-summary').addEventListener('click',async()=>{
     window.prompt('Copy this review summary:',text);
   }
 });
+

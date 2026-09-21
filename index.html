@@ -73,6 +73,18 @@
             </div>
             <label for="warmup">Sender warm-up time</label><div class="input-unit warmup"><input id="warmup" type="number" min="0" max="36500" step="1" required placeholder="45"><span>days</span></div>
           </fieldset>
+
+          <fieldset class="policy-fieldset">
+            <legend><span class="step">4</span> Review policy</legend>
+            <label for="policy-preset">Policy preset</label>
+            <select id="policy-preset" aria-describedby="policy-help">
+              <option value="conservative">Conservative</option>
+              <option value="standard" selected>Standard</option>
+              <option value="lenient">Lenient</option>
+            </select>
+            <p id="policy-help" class="hint">Choose how strict the visible thresholds should be. These presets are review aids, not universal deliverability rules.</p>
+            <div id="policy-preview" class="policy-preview" aria-live="polite"></div>
+          </fieldset>
           <div id="form-error" class="form-error" role="alert" hidden></div>
           <div class="form-actions"><button class="primary" type="submit">Check campaign <span aria-hidden="true">→</span></button><button type="reset" class="reset">Clear form</button></div>
         </form>
@@ -91,7 +103,7 @@
           <div id="result-details" hidden><details><summary>View decision details</summary><pre id="json-output"></pre></details><div class="result-actions"><button id="copy-summary" type="button" class="download">Copy summary <span aria-hidden="true">⌘</span></button><button id="download" type="button" class="download">Download review · JSON <span aria-hidden="true">↓</span></button></div><p class="hint">The downloaded file includes your campaign entries.</p></div>
           <div class="result-footnote">Advisory only. A passing check is not permission to send or a guarantee of inbox delivery.</div>
         </section>
-        <section class="policy-card"><span class="eyebrow">THE RULES, IN PLAIN SIGHT</span><h3>What we're checking</h3><dl><div><dt>Sender authentication</dt><dd>All 3 passed</dd></div><div><dt>Bounce rate</dt><dd>≤ 2%</dd></div><div><dt>Complaint rate</dt><dd>≤ 0.1%</dd></div><div><dt>List age</dt><dd>≤ 90 days</dd></div><div><dt>Sender warm-up</dt><dd>≥ 14 days</dd></div></dl><p>Also flags four simple phrases: “urgent”, “expires tonight”, “free money”, and “no unsubscribe”. These substring checks may miss issues or flag harmless wording.</p><p>Useful as a preflight checklist before handoff to your ESP, growth team, or compliance reviewer.</p></section>
+        <section class="policy-card"><span class="eyebrow">THE RULES, IN PLAIN SIGHT</span><h3>What we're checking</h3><p id="policy-summary" class="policy-summary"></p><dl><div><dt>Sender authentication</dt><dd>All 3 passed</dd></div><div><dt>Bounce rate</dt><dd id="rule-bounce">≤ 2%</dd></div><div><dt>Complaint rate</dt><dd id="rule-complaint">≤ 0.1%</dd></div><div><dt>List age</dt><dd id="rule-freshness">≤ 90 days</dd></div><div><dt>Sender warm-up</dt><dd id="rule-warmup">≥ 14 days</dd></div></dl><p>Also flags four simple phrases: “urgent”, “expires tonight”, “free money”, and “no unsubscribe”. These substring checks may miss issues or flag harmless wording.</p><p>Threshold presets are local review aids, not universal deliverability rules.</p><p>Useful as a preflight checklist before handoff to your ESP, growth team, or compliance reviewer.</p></section>
         <section class="flow-card"><span class="eyebrow">HOW IT WORKS</span><h3>Local rule check</h3><ol><li><strong>Map inputs</strong><span>Your fields become a small review object in the browser.</span></li><li><strong>Run rules</strong><span>The page compares those values with visible thresholds and wording checks.</span></li><li><strong>Show output</strong><span>You get pass, review, or hold plus optional JSON and copied summary text.</span></li></ol><p>No DNS lookup, sending action, account connection, or server-side storage happens here.</p></section>
         <div class="small-note"><span aria-hidden="true">↳</span><p>No email is sent. No API key is needed.<br>This demo uses fixed rules, not AI.</p></div>
       </aside>

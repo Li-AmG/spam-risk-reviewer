@@ -1,4 +1,28 @@
 // Adapted from spam-risk-reviewer-skill, commit d44746791b22b644798eefdca5c1fea3fa4c9389.
+const POLICY_PRESETS = {
+  conservative: {
+    label: "Conservative",
+    description: "Tighter thresholds for sensitive or less-proven sending programs.",
+    policy: { max_bounce_rate: 0.01, max_complaint_rate: 0.0005, max_freshness_days: 60, min_warm_up_days: 21 },
+  },
+  standard: {
+    label: "Standard",
+    description: "The default demo policy used for the original examples.",
+    policy: { max_bounce_rate: 0.02, max_complaint_rate: 0.001, max_freshness_days: 90, min_warm_up_days: 14 },
+  },
+  lenient: {
+    label: "Lenient",
+    description: "A looser review gate for known, consented lists with stronger reviewer judgment.",
+    policy: { max_bounce_rate: 0.03, max_complaint_rate: 0.002, max_freshness_days: 120, min_warm_up_days: 7 },
+  },
+};
+
+function policyPreset(name = "standard") {
+  const key = Object.hasOwn(POLICY_PRESETS, name) ? name : "standard";
+  const preset = POLICY_PRESETS[key];
+  return { key, label: preset.label, description: preset.description, policy: normalizePolicy(preset.policy) };
+}
+
 function normalizePolicy(raw = {}) {
   return {
     max_bounce_rate: numberOr(raw.max_bounce_rate, 0.02),
@@ -120,4 +144,4 @@ function stringOr(value) {
 }
 
 
-export { normalizePolicy, reviewSpamRisk };
+export { POLICY_PRESETS, normalizePolicy, policyPreset, reviewSpamRisk };

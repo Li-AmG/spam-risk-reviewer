@@ -21,7 +21,7 @@ No login is required. The page runs the review locally in the browser.
 
 ## Current Status
 
-This is an early static demo deployed on Cloudflare Workers. It is useful for feedback, examples, and small workflow discussions. It is not a production deliverability platform, DNS verifier, consent system, or sending approval tool.
+This is an early static demo deployed on Cloudflare Workers. It includes visible policy presets, realistic examples, copyable summaries, and JSON reports for feedback and small workflow discussions. It is not a production deliverability platform, DNS verifier, consent system, or sending approval tool.
 
 ## What It Checks
 
@@ -62,8 +62,7 @@ These examples are synthetic. They are meant to show behavior, not to represent 
 
 Near-term work is intentionally small:
 
-- Add visible policy presets without sending data to a server.
-- Refine the how-it-works and rule explanation copy as feedback comes in.
+- Refine the policy preset wording and thresholds as feedback comes in.\n- Add more realistic edge-case examples without sending data to a server.
 
 ## Privacy
 
@@ -142,3 +141,4 @@ Validation currently covers the existing fixtures, missing signals, threshold bo
 ## License
 
 MIT. See `LICENSE`.
+
