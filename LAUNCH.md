@@ -72,7 +72,7 @@ Demo: https://spam-risk-reviewer.wt820101.workers.dev
 
 - Add an optional field for ESP/provider name and include it in exported JSON.
 - Add a compact "copy review summary" button.
-- Add a third result level for "review" scenarios rather than only pass/hold.
+- Refine the `review` level with more examples and clearer guidance.
 - Add tests for every built-in web demo scenario.
 - Add configurable thresholds in the web UI with clear defaults.
 - Add a plain-English explanation panel for each rule.

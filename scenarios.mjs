@@ -33,6 +33,23 @@ const scenarios = {
       dmarc: 'pass',
     },
   },
+  wording: {
+    label: 'Wording review',
+    expected: { risk_level: 'review', blockers: 1 },
+    fields: {
+      sender: 'newsletter@example.com',
+      subject: 'Urgent product note for account owners',
+      summary: 'Short opt-in message for active customers with the standard unsubscribe footer and no deadline promotion.',
+      size: 5200,
+      freshness: 21,
+      bounce: 0.9,
+      complaint: 0.03,
+      warmup: 40,
+      spf: 'pass',
+      dkim: 'pass',
+      dmarc: 'pass',
+    },
+  },
   reactivation: {
     label: 'Reactivation list',
     expected: { risk_level: 'hold', blockers: 4 },
@@ -92,4 +109,3 @@ function scenarioInputs(fields) {
 }
 
 export { scenarios, scenarioInputs };
-

@@ -73,9 +73,7 @@ function reviewSpamRisk(rawInputs, policy) {
   let riskLevel = "pass";
   let escalation = "none";
   if (!preflightClear) {
-    riskLevel = blockers.some((reason) => reason.includes("did not pass") || reason.includes("exceeds"))
-      ? "hold"
-      : "review";
+    riskLevel = blockers.some(isHoldReason) ? "hold" : "review";
     escalation = "needs_human";
   }
 
@@ -88,6 +86,13 @@ function reviewSpamRisk(rawInputs, policy) {
     dispatch_target: "send-as",
     effect_boundary: "public_send remains owned by governed send-as, not this skill",
   };
+}
+
+function isHoldReason(reason) {
+  return reason.includes("is required")
+    || reason.includes("did not pass")
+    || reason.includes("exceeds")
+    || reason.includes("below");
 }
 
 function detectContentFlags(text) {

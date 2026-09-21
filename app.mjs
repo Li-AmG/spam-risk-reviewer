@@ -19,7 +19,7 @@ function resetResult(edited=false) {
   $('copy-summary').textContent='Copy summary';
 }
 function clearErrors(){ $('form-error').hidden=true; for(const el of form.querySelectorAll('[aria-invalid]'))el.removeAttribute('aria-invalid'); }
-for (const [key,id] of [['low','low-example'],['launch','launch-example'],['reactivation','reactivation-example'],['high','high-example']]) {
+for (const [key,id] of [['low','low-example'],['launch','launch-example'],['wording','wording-example'],['reactivation','reactivation-example'],['high','high-example']]) {
   $(id).addEventListener('click',()=>{ for(const [field,value] of Object.entries(scenarios[key].fields)) $(field).value=value; clearErrors(); resetResult(true); });
 }
 form.addEventListener('input',()=>{clearErrors();resetResult(true);});

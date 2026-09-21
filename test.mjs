@@ -17,6 +17,7 @@ assert.equal(reviewSpamRisk(boundary,policy).risk_level,'pass');
 boundary.list_metadata.bounce_rate=.020001;assert.equal(reviewSpamRisk(boundary,policy).risk_level,'hold');
 const unknown=structuredClone(low);unknown.sender_auth_posture.dkim_pass=false;assert.equal(reviewSpamRisk(unknown,policy).preflight_clear,false);
 const wording=structuredClone(low);wording.campaign_draft.subject='URGENT update';assert.equal(reviewSpamRisk(wording,policy).risk_level,'review');
+const missing=reviewSpamRisk({},policy);assert.equal(missing.risk_level,'hold');
 for (const scenario of Object.values(scenarios)) {
   const verdict=reviewSpamRisk(scenarioInputs(scenario.fields),policy);
   assert.equal(verdict.risk_level,scenario.expected.risk_level,scenario.label);
@@ -27,4 +28,7 @@ assert.match(summary,/Spam Risk Reviewer: HOLD/);
 assert.match(summary,/7 items to review/);
 assert.match(summary,/Subject: URGENT discount expires tonight/);
 assert.match(summary,/Advisory only/);
-console.log('Verified fixtures, missing signals, threshold boundaries, unknown auth, wording review, web demo scenarios, and copy summary text.');
+const reviewSummaryText=reviewSummary({verdict:reviewSpamRisk(scenarioInputs(scenarios.wording.fields),policy),inputs:scenarioInputs(scenarios.wording.fields),review_notes:['Wording to review: urgency language.']});
+assert.match(reviewSummaryText,/Spam Risk Reviewer: REVIEW/);
+assert.match(reviewSummaryText,/1 item to review/);
+console.log('Verified fixtures, missing signals, threshold boundaries, unknown auth, review state, web demo scenarios, and copy summary text.');

@@ -5,7 +5,7 @@ This roadmap keeps the project useful while staying free to operate. It assumes 
 ## Current State
 
 - Static web demo deployed on Cloudflare Workers.
-- Four built-in scenarios: opt-in newsletter, product launch, reactivation list, and imported promo blast.
+- Five built-in scenarios: opt-in newsletter, product launch, wording review, reactivation list, and imported promo blast.
 - Rule-based review logic runs locally in the browser.
 - No analytics, database, AI inference, login, or campaign upload.
 - English README and launch copy are prepared locally.
@@ -22,10 +22,10 @@ This roadmap keeps the project useful while staying free to operate. It assumes 
 
 ### 2. Better Review Output
 
-- Separate results into `pass`, `review`, and `hold`.
+- Add richer guidance for the `review` state.
 - Show a short reason next to each result badge.
 - Add a "copy summary" button for sharing the review internally.
-- Add tests for all four built-in demo scenarios.
+- Add tests for all five built-in demo scenarios.
 
 ### 3. Policy Presets
 
@@ -59,4 +59,3 @@ Before any AI integration:
 - Storing campaign data on a server.
 - Claiming inbox placement or deliverability guarantees.
 - Replacing ESP compliance review.
-

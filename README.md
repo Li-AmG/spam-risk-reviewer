@@ -13,6 +13,7 @@ Source: https://github.com/Li-AmG/spam-risk-reviewer
 Open the live demo and click one of the sample scenarios:
 
 - `Opt-in newsletter` and `Product launch` should pass with zero review items.
+- `Wording review` should land in review with one review item.
 - `Reactivation list` should hold with four review items.
 - `Imported promo blast` should hold with seven review items.
 
@@ -39,10 +40,11 @@ The current default thresholds are intentionally simple:
 
 ## Example Scenarios
 
-The web demo includes four realistic sample campaigns:
+The web demo includes five realistic sample campaigns:
 
 - Opt-in newsletter: a healthy recurring update that should pass.
 - Product launch: a larger campaign to active users that should still pass.
+- Wording review: a healthy sender with wording that deserves a human look.
 - Reactivation list: an older audience with list-health issues that needs review.
 - Imported promo blast: a stale promotional send with authentication and wording problems that should be held.
 
