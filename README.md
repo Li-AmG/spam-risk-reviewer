@@ -40,11 +40,15 @@ The current default thresholds are intentionally simple:
 
 ## Example Scenarios
 
-The web demo includes five realistic sample campaigns:
+The web demo includes nine synthetic sample campaigns:
 
 - Opt-in newsletter: a healthy recurring update that should pass.
 - Product launch: a larger campaign to active users that should still pass.
 - Wording review: a healthy sender with wording that deserves a human look.
+- Older clean list: a list with clean metrics but stale audience age.
+- New sender warm-up: a healthy campaign held because the sender is too new.
+- Missing unsubscribe wording: clean metrics with content wording that needs review.
+- Clean auth high bounce: authentication is clean, but bounce rate is too high.
 - Reactivation list: an older audience with list-health issues that needs review.
 - Imported promo blast: a stale promotional send with authentication and wording problems that should be held.
 
@@ -139,7 +143,7 @@ If the dry run is clean, use the same command without `--dry-run` when you are r
 node spam-risk-demo/build-core.mjs
 ```
 
-Validation currently covers the existing fixtures, missing signals, threshold boundaries, unknown authentication, wording review, and browser-level checks on the deployed page.
+Validation currently covers the existing fixtures, policy presets, missing signals, threshold boundaries, unknown authentication, wording review, all built-in scenarios, and browser-level checks on the deployed page.
 
 ## License
 

@@ -4,6 +4,7 @@ All notable changes to Spam Risk Reviewer are recorded here.
 
 ## Unreleased
 
+- Added four more synthetic edge-case examples for older clean lists, new sender warm-up, missing unsubscribe wording, and clean authentication with high bounce.
 - Added `PROMOTION.md` with overseas community posting copy, reply templates, and feedback questions.
 - Created an Indie Hackers product page and first feedback post for the live demo.
 
