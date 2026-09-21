@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { normalizePolicy, reviewSpamRisk } from './core.mjs';
+const base=new URL('../fund-project-review/skills/spam-risk-reviewer/fixtures/',import.meta.url);
+const low=JSON.parse(readFileSync(new URL('low-risk-verified-sender.json',base)));
+const high=JSON.parse(readFileSync(new URL('high-risk-incomplete-auth-poor-list.json',base)));
+const policy=normalizePolicy();
+assert.equal(reviewSpamRisk(low,policy).risk_level,'pass');
+assert.equal(reviewSpamRisk(low,policy).preflight_clear,true);
+assert.equal(reviewSpamRisk(high,policy).risk_level,'hold');
+assert.equal(reviewSpamRisk(high,policy).blockers.length,7);
+assert.equal(reviewSpamRisk({},policy).preflight_clear,false);
+const boundary=structuredClone(low);boundary.list_metadata.bounce_rate=.02;boundary.list_metadata.complaint_rate=.001;boundary.list_metadata.freshness=90;boundary.sender_auth_posture.warm_up_days=14;
+assert.equal(reviewSpamRisk(boundary,policy).risk_level,'pass');
+boundary.list_metadata.bounce_rate=.020001;assert.equal(reviewSpamRisk(boundary,policy).risk_level,'hold');
+const unknown=structuredClone(low);unknown.sender_auth_posture.dkim_pass=false;assert.equal(reviewSpamRisk(unknown,policy).preflight_clear,false);
+const wording=structuredClone(low);wording.campaign_draft.subject='URGENT update';assert.equal(reviewSpamRisk(wording,policy).risk_level,'review');
+console.log('Verified both fixtures, missing signals, threshold boundaries, unknown auth, and wording review.');

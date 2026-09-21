@@ -1,0 +1,8 @@
+.wrangler/
+node_modules/
+dist/
+coverage/
+.deploy-public/
+.env
+.env.*
+*.log

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A privacy-friendly email campaign preflight checker for reviewing sender authentication, list health, and obvious wording risks before you send.">
+  <meta name="theme-color" content="#0f4b3b">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://spam-risk-reviewer.wt820101.workers.dev/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f6b52'/%3E%3Cpath d='M18 44 44 18m0 0H27m17 0v17' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Spam Risk Reviewer — Check before you send">
+  <meta property="og:description" content="Review sender authentication, list health, and obvious wording risks locally in your browser before an email campaign.">
+  <meta property="og:url" content="https://spam-risk-reviewer.wt820101.workers.dev/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Spam Risk Reviewer — Check before you send">
+  <meta name="twitter:description" content="A private, browser-based preflight checklist for email campaign risk signals.">
+  <title>Spam Risk Reviewer — Check before you send</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">↗</span> Spam Risk Reviewer <span class="version">DEMO / 01</span></a>
+    <a class="source" href="https://github.com/Li-AmG/spam-risk-reviewer-skill" target="_blank" rel="noopener noreferrer">View source <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="intro">
+      <div class="eyebrow"><span class="dot"></span> EMAIL CAMPAIGN PREFLIGHT</div>
+      <h1>A second look.<br><span>Before you send.</span></h1>
+      <p>Paste the basic signals you already have from your email provider, then get a plain-English review of what needs attention before a newsletter, launch email, or reactivation campaign goes out.</p>
+      <div class="intro-note"><span aria-hidden="true">◇</span> Checks run in your browser. Your form entries are not sent to a server.</div>
+      <div class="intro-details" aria-label="How this demo helps">
+        <div><strong>For operators</strong><span>Spot list-health and sender-auth issues before a campaign reaches your ESP queue.</span></div>
+        <div><strong>For builders</strong><span>Use the open rule set as a small, auditable starting point for safer email workflows.</span></div>
+        <div><strong>Clear limits</strong><span>It is advisory only: it does not verify DNS, send email, or guarantee inbox placement.</span></div>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <section class="input-panel" aria-labelledby="campaign-heading">
+        <div class="panel-heading"><div><span class="eyebrow">01 / INPUT</span><h2 id="campaign-heading">Review a campaign</h2></div><span class="small-label">RULE-BASED CHECK</span></div>
+        <div class="examples"><span>Try a realistic scenario</span><button type="button" id="low-example">Opt-in newsletter</button><button type="button" id="launch-example">Product launch</button><button type="button" id="reactivation-example">Reactivation list</button><button type="button" id="high-example">Imported promo blast</button></div>
+        <form id="review-form" novalidate>
+          <fieldset>
+            <legend><span class="step">1</span> Campaign details</legend>
+            <label for="sender">Sender email</label>
+            <input id="sender" name="sender" type="email" maxlength="254" required placeholder="newsletter@example.com" autocomplete="off">
+            <label for="subject">Subject line</label>
+            <input id="subject" name="subject" maxlength="300" required placeholder="Your weekly product update">
+            <label for="summary">Content summary</label>
+            <textarea id="summary" name="summary" rows="3" maxlength="4000" required placeholder="Briefly describe the message and its unsubscribe option."></textarea>
+            <p class="hint">A short text summary, not a hash or your full subscriber list.</p>
+          </fieldset>
+          <fieldset>
+            <legend><span class="step">2</span> List health</legend>
+            <div class="form-grid">
+              <div><label for="size">List size</label><div class="input-unit"><input id="size" type="number" min="0" max="1000000000" step="1" required placeholder="4200"><span>contacts</span></div></div>
+              <div><label for="freshness">List age</label><div class="input-unit"><input id="freshness" type="number" min="0" max="36500" step="1" required placeholder="14"><span>days</span></div></div>
+              <div><label for="bounce">Bounce rate</label><div class="input-unit"><input id="bounce" type="number" min="0" max="100" step="any" required placeholder="0.8"><span>%</span></div></div>
+              <div><label for="complaint">Complaint rate</label><div class="input-unit"><input id="complaint" type="number" min="0" max="100" step="any" required placeholder="0.02"><span>%</span></div></div>
+            </div>
+            <p class="hint">Use measured rates from your email provider. Unknown metrics need review.</p>
+          </fieldset>
+          <fieldset>
+            <legend><span class="step">3</span> Sender signals</legend>
+            <p class="hint auth-hint">Enter results from your email provider. This tool does not verify DNS.</p>
+            <div class="auth-grid">
+              <div><label for="spf">SPF</label><select id="spf"><option value="unknown">Unknown</option><option value="pass">Passed</option><option value="fail">Failed</option></select></div>
+              <div><label for="dkim">DKIM</label><select id="dkim"><option value="unknown">Unknown</option><option value="pass">Passed</option><option value="fail">Failed</option></select></div>
+              <div><label for="dmarc">DMARC</label><select id="dmarc"><option value="unknown">Unknown</option><option value="pass">Passed</option><option value="fail">Failed</option></select></div>
+            </div>
+            <label for="warmup">Sender warm-up time</label><div class="input-unit warmup"><input id="warmup" type="number" min="0" max="36500" step="1" required placeholder="45"><span>days</span></div>
+          </fieldset>
+          <div id="form-error" class="form-error" role="alert" hidden></div>
+          <div class="form-actions"><button class="primary" type="submit">Check campaign <span aria-hidden="true">→</span></button><button type="reset" class="reset">Clear form</button></div>
+        </form>
+      </section>
+
+      <aside class="results-column">
+        <section class="result-card" aria-labelledby="result-title">
+          <div class="result-top"><span class="eyebrow">02 / REVIEW</span><span id="status-pill" class="status-pill">NOT CHECKED</span></div>
+          <div id="result-live" aria-live="polite" aria-atomic="true">
+            <div id="result-icon" class="result-icon" aria-hidden="true">◎</div>
+            <h2 id="result-title">Ready when you are.</h2>
+            <p id="result-description">Add your campaign details, or load an example to see how the review works.</p>
+            <div id="result-stats" class="result-stats" hidden><strong id="blocker-count">0</strong><span id="blocker-label">items to review</span></div>
+            <ul id="blockers" class="blockers"></ul>
+          </div>
+          <div id="result-details" hidden><details><summary>View decision details</summary><pre id="json-output"></pre></details><button id="download" type="button" class="download">Download review · JSON <span aria-hidden="true">↓</span></button><p class="hint">The downloaded file includes your campaign entries.</p></div>
+          <div class="result-footnote">Advisory only. A passing check is not permission to send or a guarantee of inbox delivery.</div>
+        </section>
+        <section class="policy-card"><span class="eyebrow">THE RULES, IN PLAIN SIGHT</span><h3>What we're checking</h3><dl><div><dt>Sender authentication</dt><dd>All 3 passed</dd></div><div><dt>Bounce rate</dt><dd>≤ 2%</dd></div><div><dt>Complaint rate</dt><dd>≤ 0.1%</dd></div><div><dt>List age</dt><dd>≤ 90 days</dd></div><div><dt>Sender warm-up</dt><dd>≥ 14 days</dd></div></dl><p>Also flags four simple phrases: “urgent”, “expires tonight”, “free money”, and “no unsubscribe”. These substring checks may miss issues or flag harmless wording.</p><p>Useful as a preflight checklist before handoff to your ESP, growth team, or compliance reviewer.</p></section>
+        <div class="small-note"><span aria-hidden="true">↳</span><p>No email is sent. No API key is needed.<br>This demo uses fixed rules, not AI.</p></div>
+      </aside>
+    </div>
+    <footer><span>Spam Risk Reviewer <span class="footer-sep">/</span> An early-stage project</span><span>Built with AI assistance. Reviewed with example tests.</span></footer>
+  </main>
+</body>
+</html>
