@@ -1,14 +1,10 @@
 import { normalizePolicy, reviewSpamRisk } from './core.mjs';
+import { scenarios, scenarioInputs } from './scenarios.mjs';
+import { reviewSummary } from './summary.mjs';
 const $ = id => document.getElementById(id);
 const form = $('review-form');
 const card = document.querySelector('.result-card');
 let report = null;
-const fixtures = {
-  low: { sender:'newsletter@example.com', subject:'Weekly product update', summary:'Short opt-in newsletter for existing customers with unsubscribe footer.', size:4200, freshness:14, bounce:0.8, complaint:0.02, warmup:45, spf:'pass', dkim:'pass', dmarc:'pass' },
-  launch: { sender:'updates@saas-example.com', subject:'New dashboard is available for your workspace', summary:'Product launch email to active trial and paid users. It explains the new dashboard, links to release notes, and keeps the standard unsubscribe footer.', size:18000, freshness:32, bounce:1.4, complaint:0.05, warmup:28, spf:'pass', dkim:'pass', dmarc:'pass' },
-  reactivation: { sender:'hello@retail-example.com', subject:'We miss you - here is what changed', summary:'Reactivation email to customers who have not opened recently. The audience is older, opt-out is included, and no purchase deadline is used.', size:64000, freshness:145, bounce:3.2, complaint:0.18, warmup:21, spf:'pass', dkim:'pass', dmarc:'unknown' },
-  high: { sender:'promo@example.net', subject:'URGENT discount expires tonight', summary:'Promotional blast to a stale imported list with aggressive urgency language.', size:28000, freshness:190, bounce:8.5, complaint:0.6, warmup:3, spf:'pass', dkim:'fail', dmarc:'pass' }
-};
 function resetResult(edited=false) {
   report=null;
   delete card.dataset.state;
@@ -20,10 +16,11 @@ function resetResult(edited=false) {
   $('result-stats').hidden=true;
   $('result-details').hidden=true;
   $('json-output').textContent='';
+  $('copy-summary').textContent='Copy summary';
 }
 function clearErrors(){ $('form-error').hidden=true; for(const el of form.querySelectorAll('[aria-invalid]'))el.removeAttribute('aria-invalid'); }
 for (const [key,id] of [['low','low-example'],['launch','launch-example'],['reactivation','reactivation-example'],['high','high-example']]) {
-  $(id).addEventListener('click',()=>{ for(const [field,value] of Object.entries(fixtures[key])) $(field).value=value; clearErrors(); resetResult(true); });
+  $(id).addEventListener('click',()=>{ for(const [field,value] of Object.entries(scenarios[key].fields)) $(field).value=value; clearErrors(); resetResult(true); });
 }
 form.addEventListener('input',()=>{clearErrors();resetResult(true);});
 form.addEventListener('change',()=>{clearErrors();resetResult(true);});
@@ -61,11 +58,8 @@ form.addEventListener('submit',event=>{
   event.preventDefault(); clearErrors(); resetResult();
   const errors=validate();
   if(errors.length){$('form-error').textContent=errors.join(' ');$('form-error').hidden=false;form.querySelector('[aria-invalid=true]').focus();return;}
-  const inputs={
-    campaign_draft:{from:$('sender').value.trim(),subject:$('subject').value.trim(),content_digest:$('summary').value.trim()},
-    list_metadata:{size:Number($('size').value),bounce_rate:Number($('bounce').value)/100,complaint_rate:Number($('complaint').value)/100,freshness:Number($('freshness').value)},
-    sender_auth_posture:{spf_pass:$('spf').value==='pass',dkim_pass:$('dkim').value==='pass',dmarc_pass:$('dmarc').value==='pass',warm_up_days:Number($('warmup').value)}
-  };
+  const fields={sender:$('sender').value.trim(),subject:$('subject').value.trim(),summary:$('summary').value.trim(),size:Number($('size').value),freshness:Number($('freshness').value),bounce:Number($('bounce').value),complaint:Number($('complaint').value),warmup:Number($('warmup').value),spf:$('spf').value,dkim:$('dkim').value,dmarc:$('dmarc').value};
+  const inputs=scenarioInputs(fields);
   const policy=normalizePolicy();
   const verdict=reviewSpamRisk(inputs,policy);
   const messages=verdict.blockers.map(friendly);
@@ -83,4 +77,15 @@ $('download').addEventListener('click',()=>{
   if(!report)return;
   const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)+'\n'],{type:'application/json'}));
   const link=document.createElement('a');link.href=url;link.download='spam-risk-review.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+$('copy-summary').addEventListener('click',async()=>{
+  if(!report)return;
+  const text=reviewSummary(report);
+  try {
+    await navigator.clipboard.writeText(text);
+    $('copy-summary').textContent='Copied';
+    setTimeout(()=>$('copy-summary').textContent='Copy summary',1500);
+  } catch {
+    window.prompt('Copy this review summary:',text);
+  }
 });

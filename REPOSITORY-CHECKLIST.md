@@ -9,7 +9,7 @@ Use this before publishing or syncing the demo to GitHub.
 - Confirm the GitHub repository description and topics from `LAUNCH.md`.
 - Make sure no local logs, credentials, cache folders, or `.wrangler` files are committed.
 - Run `node test.mjs` and `node --check app.mjs`.
-- Run `node stage-public-assets.mjs` before any Cloudflare deployment.
+- Run `node stage-public-assets.mjs` before any Cloudflare deployment and confirm the public asset list is complete.
 - Open the live demo and run the four sample scenarios.
 
 ## Suggested Repository Files

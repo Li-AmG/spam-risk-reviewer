@@ -6,6 +6,8 @@ const publicAssets = [
   'styles.css',
   'app.mjs',
   'core.mjs',
+  'scenarios.mjs',
+  'summary.mjs',
   '_headers',
   'robots.txt',
   'sitemap.xml',
@@ -23,4 +25,3 @@ console.log(`Staged ${publicAssets.length} public assets in ${target}`);
 for (const file of publicAssets) {
   console.log(`- ${file}`);
 }
-

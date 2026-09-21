@@ -112,6 +112,8 @@ Only deploy these public assets:
 - `styles.css`
 - `app.mjs`
 - `core.mjs`
+- `scenarios.mjs`
+- `summary.mjs`
 - `_headers`
 - `robots.txt`
 - `sitemap.xml`

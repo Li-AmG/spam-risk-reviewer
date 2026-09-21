@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { normalizePolicy, reviewSpamRisk } from './core.mjs';
+import { scenarios, scenarioInputs } from './scenarios.mjs';
+import { reviewSummary } from './summary.mjs';
 const base=new URL('../fund-project-review/skills/spam-risk-reviewer/fixtures/',import.meta.url);
 const low=JSON.parse(readFileSync(new URL('low-risk-verified-sender.json',base)));
 const high=JSON.parse(readFileSync(new URL('high-risk-incomplete-auth-poor-list.json',base)));
@@ -15,4 +17,14 @@ assert.equal(reviewSpamRisk(boundary,policy).risk_level,'pass');
 boundary.list_metadata.bounce_rate=.020001;assert.equal(reviewSpamRisk(boundary,policy).risk_level,'hold');
 const unknown=structuredClone(low);unknown.sender_auth_posture.dkim_pass=false;assert.equal(reviewSpamRisk(unknown,policy).preflight_clear,false);
 const wording=structuredClone(low);wording.campaign_draft.subject='URGENT update';assert.equal(reviewSpamRisk(wording,policy).risk_level,'review');
-console.log('Verified both fixtures, missing signals, threshold boundaries, unknown auth, and wording review.');
+for (const scenario of Object.values(scenarios)) {
+  const verdict=reviewSpamRisk(scenarioInputs(scenario.fields),policy);
+  assert.equal(verdict.risk_level,scenario.expected.risk_level,scenario.label);
+  assert.equal(verdict.blockers.length,scenario.expected.blockers,scenario.label);
+}
+const summary=reviewSummary({verdict:reviewSpamRisk(scenarioInputs(scenarios.high.fields),policy),inputs:scenarioInputs(scenarios.high.fields),review_notes:['DKIM: reported as failed. Confirm a passing result with your email provider.']});
+assert.match(summary,/Spam Risk Reviewer: HOLD/);
+assert.match(summary,/7 items to review/);
+assert.match(summary,/Subject: URGENT discount expires tonight/);
+assert.match(summary,/Advisory only/);
+console.log('Verified fixtures, missing signals, threshold boundaries, unknown auth, wording review, web demo scenarios, and copy summary text.');
