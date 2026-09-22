@@ -17,7 +17,7 @@ Open the live demo and click one of the sample scenarios:
 - `Reactivation list` should hold with four review items.
 - `Imported promo blast` should hold with seven review items.
 
-No login is required. The page runs the review locally in the browser.
+No login is required. The page runs the review locally in the browser. Feedback and changelog are linked from the live demo footer.
 
 ## Current Status
 
@@ -62,8 +62,8 @@ These examples are synthetic. They are meant to show behavior, not to represent 
 - `CONTRIBUTING.md` and `PRIVACY.md`: contribution expectations and the browser-only data boundary.
 - `LICENSE-OPTIONS.md`: notes on why MIT was selected for this demo.
 - `REPOSITORY-CHECKLIST.md`: pre-publication checks for GitHub setup.
-- CHANGELOG.md: short release history and follow-up improvements.
-- FEEDBACK.md: early external feedback log and follow-up questions.
+- `CHANGELOG.md`: short release history and follow-up improvements.
+- `FEEDBACK.md`: early external feedback log and follow-up questions.
 
 ## Roadmap Snapshot
 
