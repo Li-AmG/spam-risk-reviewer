@@ -17,7 +17,7 @@ Open the live demo and click one of the sample scenarios:
 - `Reactivation list` should hold with four review items.
 - `Imported promo blast` should hold with seven review items.
 
-No login is required. The page runs the review locally in the browser. Feedback and changelog are linked from the live demo footer.
+No login is required. The page runs the review locally in the browser. Feedback and changelog are linked from the live demo footer. The feedback link asks visitors not to post private campaign data.
 
 ## Current Status
 
