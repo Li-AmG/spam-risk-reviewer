@@ -62,7 +62,8 @@ These examples are synthetic. They are meant to show behavior, not to represent 
 - `CONTRIBUTING.md` and `PRIVACY.md`: contribution expectations and the browser-only data boundary.
 - `LICENSE-OPTIONS.md`: notes on why MIT was selected for this demo.
 - `REPOSITORY-CHECKLIST.md`: pre-publication checks for GitHub setup.
-- `CHANGELOG.md`: short release history and follow-up improvements.
+- CHANGELOG.md: short release history and follow-up improvements.
+- FEEDBACK.md: early external feedback log and follow-up questions.
 
 ## Roadmap Snapshot
 
@@ -148,5 +149,6 @@ Validation currently covers the existing fixtures, policy presets, missing signa
 ## License
 
 MIT. See `LICENSE`.
+
 
 
