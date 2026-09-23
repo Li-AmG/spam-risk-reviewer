@@ -1,0 +1,61 @@
+name: One-minute product feedback
+description: Share practical feedback after trying the browser demo. Do not include private campaign or subscriber data.
+title: "Feedback: "
+labels:
+  - feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying Spam Risk Reviewer. Generic examples are enough—please do not paste campaign content, subscriber data, credentials, or private company information.
+  - type: dropdown
+    id: role
+    attributes:
+      label: Which perspective best matches you?
+      options:
+        - Email marketer or operator
+        - Founder or product builder
+        - Developer or security reviewer
+        - Curious tester
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: What happened when you tried it?
+      options:
+        - The result felt useful and clear
+        - The result was useful but something was unclear
+        - A rule felt too strict or too lenient
+        - An important signal was missing
+        - I could not complete the review
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: What is the one change that would make it more useful?
+      description: A short generic example is welcome. Please omit private data.
+      placeholder: "Example: explain why an unknown DMARC result needs review, or let me mark a metric as unavailable."
+    validations:
+      required: true
+  - type: dropdown
+    id: format
+    attributes:
+      label: Where would you most likely use it?
+      options:
+        - This web page
+        - A reusable checklist or template
+        - A CLI or GitHub Action
+        - An ESP or marketing workflow integration
+        - I would not use it yet
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I have not included private campaign or subscriber data.
+          required: true

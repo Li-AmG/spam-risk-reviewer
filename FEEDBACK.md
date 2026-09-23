@@ -15,6 +15,13 @@ This file tracks early public feedback for Spam Risk Reviewer without storing pr
 - GitHub issue #6: no external comments yet.
 - Indie Hackers post: 1 like, 0 comments observed during the first follow-up check.
 
+## 2026-09-24
+
+- GitHub issue #6 still has no external comments.
+- GitHub recorded 8 repository views from 2 unique visitors and 98 clones from 53 unique cloners for the available traffic window. Clone counts can include automated systems and are not treated as user feedback.
+- Added a prominent one-minute feedback callout and a structured GitHub feedback form to reduce response effort.
+- This collection improvement is not user feedback and is not a basis for v0.2.0 by itself.
+
 ### Questions to keep asking
 
 - Are the current signals useful before sending a campaign?

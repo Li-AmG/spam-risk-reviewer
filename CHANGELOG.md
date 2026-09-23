@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 - 2026-09-24
+
+- Added a prominent one-minute feedback invitation to the live demo.
+- Added a structured GitHub feedback form with a privacy reminder and four short questions.
+- Kept feedback collection outside the demo runtime, so campaign entries still remain in the browser.
+
 All notable changes to Spam Risk Reviewer are recorded here.
 
 ## Unreleased
