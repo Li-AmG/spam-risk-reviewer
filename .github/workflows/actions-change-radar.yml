@@ -1,0 +1,30 @@
+name: Actions Change Radar
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "action.yml"
+      - "action.yaml"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/**"
+      - "action.yml"
+      - "action.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Scan GitHub Actions changes
+        uses: Li-AmG/actions-change-radar@f25165ce5bcc7feb7d857cb7476f2f8beb562322 # v0.1.1
+        with:
+          fail-on: error
