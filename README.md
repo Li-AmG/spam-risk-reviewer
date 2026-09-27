@@ -8,6 +8,8 @@ Live demo: https://spam-risk-reviewer.wt820101.workers.dev
 
 Source: https://github.com/Li-AmG/spam-risk-reviewer
 
+[![Actions Change Radar](https://github.com/Li-AmG/spam-risk-reviewer/actions/workflows/actions-change-radar.yml/badge.svg)](https://github.com/Li-AmG/spam-risk-reviewer/actions/workflows/actions-change-radar.yml)
+
 ## Quick Try
 
 Open the live demo and click one of the sample scenarios:
